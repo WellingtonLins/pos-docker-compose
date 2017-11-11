@@ -325,7 +325,8 @@ Simplesmente abra digite no docker:
 * Remover a network
  
 * O maven vai limpar o projeto   
-
+   
+* Porém o seu volume pernanecerá e não sera destruído.   
 
 ![alt text](img/sue.png "Java") 
 
@@ -335,7 +336,7 @@ Abra o docker e va ate o diretorio onde esta a sua aplicação.
 depois digite para iniciar o seguinte comando:    
 sh run.sh   
 
-Para para a aplicação voce digita:   
+Para filanizar a aplicação você digita:   
 sh nonrun.sh   
 
 Agora va até o browser a abra o seu projeto: [http://localhost:8082/app](http://localhost:8081/app.war/ )   
