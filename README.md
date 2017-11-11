@@ -198,9 +198,11 @@ Primeiro vamos criar a nossa rede:
 
 Agora vamos configurar os serviços:   
 Serão dois o serviço chamado postgres (para o nosso banco de dados)   
-e o serviço chamado web (para o sistema java web)   
+e o serviço chamado web (para o sistema java web)  
+#### Serviço postgres
+ 
 *`postgres:`* diz o nome do serviço       
-  *`build: ./postgres`*  referesse ao ponto de montagem  
+  *`build: ./postgres`*  referesse ao lugar em que esta arquivo Dockfile do postgres  
   *`image: ricardojob/banco`* indica a imagem      
   *`container_name: banco`*   nome do container   
   *`ports:`*   diz quais portas serão usadas   
@@ -210,7 +212,20 @@ e o serviço chamado web (para o sistema java web)
   *`networks:`* indica a rede usada pelo serviço       
       *`- antenas-de-vinil `* nome da rede   
 
+#### Serviço web
 	
+	*`web:`* diz o nome do serviço       
+  *`build: .`*  referesse ao lugar em que esta arquivo Dockfile da aplicação web 
+  *`image: ricardojob/app`* indica a imagem      
+  *`container_name: app`*   nome do container   
+  *`ports:`*   diz quais portas serão usadas   
+     *`  - "8082:8080"`*  as portas  em si (nossa_maquina:container)     
+  *`links:`* diz como o docker vincular os links entre os serviços   
+    *`  - "postgres:host-banco"`* configuração do link (serviço:nome_que_dado_na_clase_java_de_coneção)     	 
+  *`networks:`* indica a rede usada pelo serviço       
+      *`- antenas-de-vinil `* nome da rede   
+	  
+	  
 Se você observar atentamente o arquivo docker-composer.yml criado acima, você verá que ele esta identado e tambem que a seguinte estrutura se repete:   
 ```
 nome-do-serviço:    
@@ -218,15 +233,15 @@ nome-do-serviço:
   image:
   container_name: 
   ports: 
-  links: 
-  networks:
+
   ```
-  Pois bem nele esta configurado o que teriamos de digitar todas as vezes que quisessemos executar a nossa aplicação.
-  
-  Na segunda linha
+  Sendo que os atributos de `networks:` e `links:` podem ou não estar presentes. 
   
   
   
+  Pois bem nele esta configurado o nosso docker-compose.yml e agora podemos
+  
+
   
 Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
 
@@ -237,13 +252,18 @@ No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicaç�
   
 ## Implantação usando  arquivo .sh
 
+Observação:  
+Deixei comentado nos arquivos .sh abaixo a configuração necessaria caso não existe o nosso arquivo docker-compose.yml, veja a diferença.  
+Os comentarios são precedidos pelo simbolo #
+
 Para agilizar o processo de desenvolvimento vamos criar dois arquivos .sh: 
  
 **run.sh**   
 
 O arquivo **run.sh** deve conter o seguinte conteúdo:
 
--------------------------------------------------------------    
+------------------------------------------------------------- 
+```   
 #docker network create antenas-de-vinil   
 #docker build -t ricardojob/banco ./postgres    
 #docker run -p 5433:5432 -d --name banco -v $(pwd)/data:/var/lib/postgresql/data ricardojob/banco
@@ -254,12 +274,12 @@ O arquivo **run.sh** deve conter o seguinte conteúdo:
  docker network create antenas-de-vinil
  mvn clean package
  docker-compose up -d
-
+```
 -------------------------------------------------------------    
-**nonrun.sh**  
-
+**nonrun.sh**   
 O arquivo **nonrun.sh** deve conter o seguinte conteúdo:    
 -------------------------------------------------------------    
+```
 #docker stop app
 #docker kill app
 #docker rm app
@@ -274,6 +294,7 @@ O arquivo **nonrun.sh** deve conter o seguinte conteúdo:
 docker-compose down
 docker network rm antenas-de-vinil
 mvn clean 
+```
 -------------------------------------------------------------   
 
 
