@@ -202,7 +202,7 @@ e o serviço chamado web (para o sistema java web)
 #### Serviço postgres
  
 *`postgres:`* diz o nome do serviço       
-  *`build: ./postgres`*  referesse ao lugar em que esta arquivo Dockfile do postgres  
+  *`build: ./postgres`*  refere-se ao lugar em que esta arquivo Dockfile do postgres  
   *`image: ricardojob/banco`* indica a imagem      
   *`container_name: banco`*   nome do container   
   *`ports:`*   diz quais portas serão usadas   
@@ -215,13 +215,13 @@ e o serviço chamado web (para o sistema java web)
 #### Serviço web
 	
 	*`web:`* diz o nome do serviço       
-  *`build: .`*  referesse ao lugar em que esta arquivo Dockfile da aplicação web 
+  *`build: .`*  refere-se ao lugar em que esta arquivo Dockfile da aplicação web    
   *`image: ricardojob/app`* indica a imagem      
   *`container_name: app`*   nome do container   
   *`ports:`*   diz quais portas serão usadas   
      *`  - "8082:8080"`*  as portas  em si (nossa_maquina:container)     
   *`links:`* diz como o docker vincular os links entre os serviços   
-    *`  - "postgres:host-banco"`* configuração do link (serviço:nome_que_dado_na_clase_java_de_coneção)     	 
+    *`  - "postgres:host-banco"`* configuração do link (serviço:nome_que_dado_na_clase_java_de_coneção)        	 
   *`networks:`* indica a rede usada pelo serviço       
       *`- antenas-de-vinil `* nome da rede   
 	  
@@ -237,18 +237,6 @@ nome-do-serviço:
   ```
   Sendo que os atributos de `networks:` e `links:` podem ou não estar presentes. 
   
-  
-  
-  Pois bem nele esta configurado o nosso docker-compose.yml e agora podemos
-  
-
-  
-Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
-
-Acima nós configuramos a porta do tomcat para 8082 lembra?   
-     
-No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicação em [http://192.168.99.100:8082/Aplicacao.war/](http://192.168.99.100:8082/Aplicacao.war/ )
-
   
 ## Implantação usando  arquivo .sh
 
@@ -299,7 +287,7 @@ mvn clean
 
 
 Assim uma vez que você já tenha as imagens e os containers criados você   
-não precsia digitar todas as vezes os comandos de criar a imagem do banco de dados,      
+não precsia digitar todas as vezes os comandos de criar a network, criar a imagem do banco de dados,      
 criar o conteiner desse banco, e depois criar a imagem da aplicação web criar o   
 o container apos cada atualização de seu projeto.   
 Simplesmente abra digite no docker: 
@@ -309,8 +297,10 @@ Simplesmente abra digite no docker:
 **sh run.sh**     
 
  Vai fazer tudo de uma só vez :    
+* O docker vai criar a network, para ser usada pelos serviços  
 * O docker vai criar a imagem do banco   
-* O dockar vai criar o container desse banco e iniciar o mesmo    
+* O docker vai criar o container desse banco e iniciar o mesmo  
+* O docker vai criar o volume  
 * O maven vai criar o arquivo .war do projeto   
 * Vai criar a imagem da aplicação   
 * Por ultimo criar e iniciar o container da aplicação  
@@ -329,11 +319,29 @@ Simplesmente abra digite no docker:
 * O docker vai matar o container   
 * Remover o container do banco
 * Remover a imagem do banco
+* Remover a network
  
 * O maven vai limpar o projeto   
 
 
 ![alt text](img/sue.png "Java") 
+
+## Rodando a aplicação   
+
+Abra o docker e va ate o diretorio onde esta a sua aplicação.   
+depois digite para iniciar o seguinte comando:    
+sh run.sh   
+
+Para para a aplicação voce digita:   
+sh stop.sh   
+
+Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
+
+Acima nós configuramos a porta do tomcat para 8082 lembra?   
+     
+No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicação em [http://192.168.99.100:8082/Aplicacao.war/](http://192.168.99.100:8082/Aplicacao.war/ )
+
+
 
 ## Listar os containers
 
@@ -341,9 +349,13 @@ Simplesmente abra digite no docker:
 
 
 ## Listar os containers de ativos e inativos
-
 `docker ps -a`
 
+## Listar todos os volumes 
+`docker volumes ls`  
+
+## Listar os networks
+`docker networks ls`
 
 ## Parar o container
 
@@ -352,6 +364,13 @@ Simplesmente abra digite no docker:
 
 ## Documentação Docker
 [Docker referências](https://docs.docker.com/reference/ )
+
+Para mais informações veja:   
+
+
+[compose](https://docs.docker.com/compose/)
+[volumes](https://docs.docker.com/engine/admin/volumes/volumes/)
+[network](https://docs.docker.com/engine/tutorials/networkingcontainers/)
 
 ## Construido com 
 
@@ -380,3 +399,5 @@ Nós usamos o [Git](https://git-scm.com/) .
 wellingtonlins2013@gmail.com
 
 #### Tell me your problems and doubts...
+
+![alt text](img/navio-c.png "Navio") 
