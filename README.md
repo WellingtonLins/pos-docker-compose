@@ -1,6 +1,6 @@
 # pos-docker-compose
    
- A aplicação desenvolvida é um de crud javaweb com tomcat e o postgres.   
+ A aplicação desenvolvida é um crud javaweb com tomcat e o postgres.   
  Ela é o suficiente para trabalharmos com três conceitos junto ao docker que serão 
  `docker-composer`, `volumes` e `network`.  
  
@@ -98,41 +98,20 @@ INSERT INTO pessoa(nome, cpf) VALUES ('Madruga', '123.132.121-31');
 INSERT INTO pessoa(nome, cpf) VALUES ('Florinda', '123.132.121-31');     
 
 
-## Criar uma imagem
+## Criar a imagem do banco
 
 `docker build -t elefante/banco ./postgres`    
 *`-t`: qual a tag que vamos atribuir a essa imagem*  
-*`./postgres`: caminho  para o arquivo Dockerfile do postgres que esta dentro da pasta postgres*  
-*`elefante/banco`: nome da imagem  que atribuimos   
+*`./postgres`: caminho  para o arquivo Dockerfile do postgres que esta dentro da pasta postgres*   
+*`elefante/banco`*: nome da imagem  que atribuimos   
 Depois que você executar o comando acima , caso você não tenha a imagem    
 do postgres, o docker vai providenciar  para você automaticamente, claro    
 isso acontece porque descrevemos isso no Dockerfile.
         
- 
-    
-## Listar as imagens
-
-`docker image ls`   
-ou   
- `docker images`
-
-## Executar o container
-
-
-`docker run -p 5433:5432 -d --name banco elefante`  
-*`-p`: o bind entre a porta do host local com a porta do container*  
-*`-d`: o container seja executar em background* não obstruindo  o terminal  
-*`--name`: o nome do container* 
-*`banco` : nome da container 
-  
-
-Acima nós configuramos a porta do postgres para 5433    
 
 
 
-
-
-## Criando o arquivo `Dockerfile`
+## Criando o arquivo `Dockerfile` da aplicação web
 
 ```
 FROM tomcat
@@ -159,7 +138,7 @@ E claro dentro da pasta `WEB-INF` temos que ter uma outro diretório chamado `li
 que deve conter as bibliotecas `jstl.jar` e `standart.jar`, camos contrario teremos   
 problemas ao carreagar o nosso sistema no browser.
 
-## Criar uma imagem
+## Criar a imagem da aplicação web 
 
 `docker build -t minhaapp .`    
 *`-t`: qual a tag que vamos atribuir a essa imagem*  
@@ -173,18 +152,81 @@ isso acontece porque descrevemos isso  no Dockerfile do projeto em questão.
 FROM  **tomcat**   
 COPY target/Aplicacao.war ${CATALINA_HOME}/webapps   
     
-## Listar as imagens
+## Criando o docker-composer.yml 
 
-`docker image ls`   
-ou   
- `docker images`
+Crie um arquivo no diretorio de sua aplicação chamado `docker-compose.yml`, dentro dele coloque o conteudo abiaxo:   
 
-## Executar o container
-`docker run -p 8082:8080 -d --name app --link banco:host-banco minhaapp`    
-*`-p`: o bind entre a porta do host local com a porta do container*  
-*`-d`: o container seja executar em background* não obstruindo  o terminal  
-*`--name`: o nome do container*  
-*`--link`: para o docker vincular o banco do conteiner ao host-banco que referenciado no nosso projeto java no arquivo DbUtil.java*  
+Você deve respeitar a identação desse arquivo.
+```
+version: '2'
+networks:
+  antenas-de-vinil:
+    external:
+      name: antenas-de-vinil
+services:
+ postgres:
+  build: ./postgres
+  image: ricardojob/banco
+  container_name: banco
+  ports: 
+    - "5433:5432"
+  volumes:
+    - ./postgres/data:/var/lib/postgresql/data
+  networks: 
+    - antenas-de-vinil
+ web:
+  build: .
+  image: ricardojob/app
+  container_name: app
+  ports: 
+    - "8082:8080" 
+  links: 
+    - "postgres:host-banco"
+  networks:
+    - antenas-de-vinil  
+```
+####  Entendo o aquivo 
+
+Vamos por parte:   
+Primeiro vamos criar a nossa rede:  
+*`version: '2'`* :  indica a versão do compose    
+*`networks:`* : diz que estamos trabalhando com uma rede.   
+  *`antenas-de-vinil:`*   Configuramos a  nossa rede exitente aqui.   
+    *`external:`*   
+       *`name: antenas-de-vinil `* :  nome da rede
+
+
+Agora vamos configurar os serviços:   
+Serão dois o serviço chamado postgres(para o nosso banco de dados)   
+e o serviço chamado web(para o sistema java web)   
+*`postgres:`* diz o nome do serviço       
+  *`build: ./postgres`*  referesse ao ponto de montagem  
+  *`image: ricardojob/banco`* indica a imagem      
+  *`container_name: banco`*   nome do container   
+  *`ports:`*   diz quais portas serão usadas   
+     *`  - "5433:5432"`*  as portas  em si (nossa_maquina:container)   
+  *`volumes: `*  diz qual o volume usado  
+     *` - ./postgres/data:/var/lib/postgresql/data`*    lugar onde o volume vai estar 
+  *`networks:`* indica a rede usada pelo serviço       
+      *`- antenas-de-vinil `* nome da rede   
+
+	
+Se você observar atentamente o arquivo docker-composer.yml criado acima, você verá que ele esta identado e tambem que a seguinte estrutura se repete:   
+```
+algum-nome:    
+  build: 
+  image:
+  container_name: 
+  ports: 
+  links: 
+  networks:
+  ```
+  Pois bem nele esta configurado o que teriamos de digitar todas as vezes que quisessemos executar a nossa aplicação.
+  
+  Na segunda linha
+  
+  
+  
   
 Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
 
