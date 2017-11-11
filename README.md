@@ -115,7 +115,7 @@ isso acontece porque descrevemos isso no Dockerfile.
 
 ```
 FROM tomcat
-COPY target/Aplicacao.war ${CATALINA_HOME}/webapps  
+COPY target/app.war ${CATALINA_HOME}/webapps  
 ```   
 `FROM` :  diz qual a imagem que precisamos   
 `COPY` :  diz o caminho de onde copiar os arquivos .war para a implantação   
@@ -124,13 +124,13 @@ COPY target/Aplicacao.war ${CATALINA_HOME}/webapps
 Este arquivo `Dockerfile`, deve obrigatoriamente estar dentro do diretório raiz do seu projeto.
 
 
-Vale ressaltar que o nome `Aplicacao` foi o finalName que eu demos para a aplicação       
+Vale ressaltar que o nome `app` foi o finalName que eu demos para a aplicação       
 dentro do pom.xml.  
 É por esse nome que vamos chamar o sistema no browser.   
 
 ```
 <build>    
-        <finalName>Aplicacao</finalName>    
+        <finalName>app</finalName>    
 </build>   
 ```
 
@@ -150,7 +150,7 @@ isso acontece porque descrevemos isso  no Dockerfile do projeto em questão.
         
    
 FROM  **tomcat**   
-COPY target/Aplicacao.war ${CATALINA_HOME}/webapps   
+COPY target/app.war ${CATALINA_HOME}/webapps   
     
 ## Criando o docker-composer.yml 
 
@@ -338,11 +338,11 @@ sh run.sh
 Para para a aplicação voce digita:   
 sh nonrun.sh   
 
-Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
+Agora va até o browser a abra o seu projeto: [http://localhost:8082/app](http://localhost:8081/app.war/ )   
 
 Acima nós configuramos a porta do tomcat para 8082 lembra?   
      
-No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicação em [http://192.168.99.100:8082/Aplicacao.war/](http://192.168.99.100:8082/Aplicacao.war/ )
+No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicação em [http://192.168.99.100:8082/app.war/](http://192.168.99.100:8082/app.war/ )
 
 
 
@@ -375,7 +375,7 @@ Para mais informações veja:
 - [volumes](https://docs.docker.com/engine/admin/volumes/volumes/)    
 - [network](https://docs.docker.com/engine/tutorials/networkingcontainers/)    
 
-## Construido com 
+## Construído com 
 
 * [Java](http://www.dropwizard.io/1.0.2/docs/) - Lingugem de programação
 * [Postgres](https://www.postgresql.org) - Banco de dados 
