@@ -262,9 +262,9 @@ O arquivo **run.sh** deve conter o seguinte conteúdo:
  docker network create antenas-de-vinil
  mvn clean package
  docker-compose up -d
-```
+```   
 -------------------------------------------------------------    
-**nonrun.sh**   
+**nonrun.sh**
 O arquivo **nonrun.sh** deve conter o seguinte conteúdo:    
 -------------------------------------------------------------    
 ```
@@ -400,4 +400,4 @@ wellingtonlins2013@gmail.com
 
 #### Tell me your problems and doubts...
 
-![alt text](img/navio-c.png "Navio") 
+![alt text](img/navio-c.jpg "Navio") 
