@@ -264,8 +264,11 @@ O arquivo **run.sh** deve conter o seguinte conteúdo:
  docker-compose up -d
 ```   
 -------------------------------------------------------------    
-**nonrun.sh**
-O arquivo **nonrun.sh** deve conter o seguinte conteúdo:    
+ 
+**nonrun.sh**   
+
+O arquivo **nonrun.sh** deve conter o seguinte conteúdo:
+
 -------------------------------------------------------------    
 ```
 #docker stop app
@@ -333,7 +336,7 @@ depois digite para iniciar o seguinte comando:
 sh run.sh   
 
 Para para a aplicação voce digita:   
-sh stop.sh   
+sh nonrun.sh   
 
 Agora va até o browser a abra o seu projeto: [http://localhost:8082/Aplicacao](http://localhost:8081/Aplicacao.war/ )   
 
@@ -368,9 +371,9 @@ No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicaç�
 Para mais informações veja:   
 
 
-[compose](https://docs.docker.com/compose/)
-[volumes](https://docs.docker.com/engine/admin/volumes/volumes/)
-[network](https://docs.docker.com/engine/tutorials/networkingcontainers/)
+- [compose](https://docs.docker.com/compose/)    
+- [volumes](https://docs.docker.com/engine/admin/volumes/volumes/)    
+- [network](https://docs.docker.com/engine/tutorials/networkingcontainers/)    
 
 ## Construido com 
 
