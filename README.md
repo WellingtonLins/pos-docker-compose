@@ -154,7 +154,7 @@ COPY target/Aplicacao.war ${CATALINA_HOME}/webapps
     
 ## Criando o docker-composer.yml 
 
-Crie um arquivo no diretorio de sua aplicação chamado `docker-compose.yml`, dentro dele coloque o conteudo abiaxo:   
+Crie um arquivo no diretorio de sua aplicação chamado `docker-compose.yml`, dentro dele coloque o conteudo abaixo:   
 
 Você deve respeitar a identação desse arquivo.
 ```
@@ -185,7 +185,7 @@ services:
   networks:
     - antenas-de-vinil  
 ```
-####  Entendo o aquivo 
+####  Entendendo o arquivo 
 
 Vamos por parte:   
 Primeiro vamos criar a nossa rede:  
@@ -197,8 +197,8 @@ Primeiro vamos criar a nossa rede:
 
 
 Agora vamos configurar os serviços:   
-Serão dois o serviço chamado postgres(para o nosso banco de dados)   
-e o serviço chamado web(para o sistema java web)   
+Serão dois o serviço chamado postgres (para o nosso banco de dados)   
+e o serviço chamado web (para o sistema java web)   
 *`postgres:`* diz o nome do serviço       
   *`build: ./postgres`*  referesse ao ponto de montagem  
   *`image: ricardojob/banco`* indica a imagem      
@@ -206,14 +206,14 @@ e o serviço chamado web(para o sistema java web)
   *`ports:`*   diz quais portas serão usadas   
      *`  - "5433:5432"`*  as portas  em si (nossa_maquina:container)   
   *`volumes: `*  diz qual o volume usado  
-     *` - ./postgres/data:/var/lib/postgresql/data`*    lugar onde o volume vai estar 
+     *` - ./postgres/data:/var/lib/postgresql/data`*    lugar onde o volume vai estar     
   *`networks:`* indica a rede usada pelo serviço       
       *`- antenas-de-vinil `* nome da rede   
 
 	
 Se você observar atentamente o arquivo docker-composer.yml criado acima, você verá que ele esta identado e tambem que a seguinte estrutura se repete:   
 ```
-algum-nome:    
+nome-do-serviço:    
   build: 
   image:
   container_name: 
