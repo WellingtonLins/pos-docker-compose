@@ -345,25 +345,22 @@ Acima nós configuramos a porta do tomcat para 8082 lembra?
      
 No meu caso como ainda estou usando o Docker Toolbox no windows abro a aplicação em [http://192.168.99.100:8082/app.war/](http://192.168.99.100:8082/app.war/ )
 
+### Listar as imagens
+`docker images`
+
+### Listar os containers
+
+`docker container ls` 
 
 
-## Listar os containers
-
-`docker container ls`
-
-
-## Listar os containers de ativos e inativos
+### Listar os containers de ativos e inativos
 `docker ps -a`
 
-## Listar todos os volumes 
+### Listar todos os volumes 
 `docker volumes ls`  
 
-## Listar os networks
+### Listar os networks
 `docker networks ls`
-
-## Parar o container
-
-`docker stop <container_id | container_name>`
 
 
 ## Documentação Docker
